@@ -12,7 +12,7 @@ public class RegistrationService {
         try {
             properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
-            System.err.println("Config File loading ERROR. " + e.getMessage());
+            System.err.println("Config File loading ERROR.  " + e.getMessage());
             return;
         }
 
@@ -24,7 +24,7 @@ public class RegistrationService {
                 new Thread(new RegistrationWorker(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.println("Registration Service ERROR. " + e.getMessage());
+            System.err.println("Registration Service ERROR.    " + e.getMessage());
         }
     }
 }

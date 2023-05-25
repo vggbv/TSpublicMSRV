@@ -49,18 +49,18 @@ public class RegistrationWorker implements Runnable {
                 insertUserStatement.setString(2, password);
                 insertUserStatement.executeUpdate();
 
-                output.println("200;Successfully registered. Congratulations. ");
+                output.println("200;Successfully registered. Congratulations.");
                 output.flush();
             } catch (SQLException e) {
-                System.err.println("503;Registration Worker ERROR. " + e.getMessage());
+                System.err.println("503;Registration Worker ERROR." + e.getMessage());
             }
         } catch (IOException e) {
-            System.err.println("503;Registration Worker ERROR. " + e.getMessage());
+            System.err.println("503;Registration Worker ERROR." + e.getMessage());
         } finally {
             try {
                 clientSocket.close();
             } catch (IOException e) {
-                System.err.println("500;Registration Worker: Socket ERROR. " + e.getMessage());
+                System.err.println("500;Registration Worker: Socket ERROR." + e.getMessage());
             }
         }
     }

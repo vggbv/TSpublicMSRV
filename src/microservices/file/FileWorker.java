@@ -44,13 +44,13 @@ public class FileWorker implements Runnable {
                 }
             }
         } catch (IOException e) {
-            System.err.println("503;Request processing ERROR: " + e.getMessage());
+            System.err.println("503;Request processing ERROR.   " + e.getMessage());
         } finally {
             if (clientSocket != null) {
                 try {
                     clientSocket.close();
                 } catch (IOException e) {
-                    System.err.println("500;Socket ERROR: " + e.getMessage());
+                    System.err.println("500;Socket ERROR.   " + e.getMessage());
                 }
             }
         }

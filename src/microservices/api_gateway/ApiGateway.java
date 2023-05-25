@@ -12,7 +12,7 @@ public class ApiGateway {
         try {
             properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
-            System.err.println("404;Config File loading ERROR. " + e.getMessage());
+            System.err.println("404;Config File loading ERROR." + e.getMessage());
             return;
         }
 
@@ -24,7 +24,7 @@ public class ApiGateway {
                 new Thread(() -> processRequest(clientSocket, properties)).start();
             }
         } catch (IOException e) {
-            System.err.println("503;APIGateway ERROR: " + e.getMessage());
+            System.err.println("503;APIGateway ERROR." + e.getMessage());
         }
     }
 
@@ -77,7 +77,7 @@ public class ApiGateway {
                     output.print(response);
                     output.flush();
                 } catch (IOException e) {
-                    System.err.println("503;File forwarding ERROR. " + e.getMessage());
+                    System.err.println("503;File forwarding ERROR.  " + e.getMessage());
                 }
             } else if (requestType.equals("download_file")) {
                 try (Socket targetSocket = new Socket(targetServiceIP, targetPort)) {
@@ -90,7 +90,7 @@ public class ApiGateway {
                     output.println(response);
                     output.flush();
                 } catch (IOException e) {
-                    System.err.println("503;Request forwarding ERROR. " + e.getMessage());
+                    System.err.println("503;Request forwarding ERROR." + e.getMessage());
                 }
             } else {
                 try (Socket targetSocket = new Socket(targetServiceIP, targetPort)) {
@@ -103,11 +103,11 @@ public class ApiGateway {
                     output.print(response);
                     output.flush();
                 } catch (IOException e) {
-                    System.err.println("503;Request forwarding ERROR. " + e.getMessage());
+                    System.err.println("503;Request forwarding ERROR." + e.getMessage());
                 }
             }
         } catch (IOException e) {
-            System.err.println("503;Request processing ERROR. " + e.getMessage());
+            System.err.println("503;Request processing ERROR." + e.getMessage());
         } finally {
             try {
                 clientSocket.close();

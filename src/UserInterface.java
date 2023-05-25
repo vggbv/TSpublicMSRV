@@ -162,7 +162,7 @@ public class UserInterface {
         try {
             properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
-            System.err.println("Config File loading ERROR. " + e.getMessage());
+            System.err.println("Config File loading ERROR." + e.getMessage());
             return "404;Config File ERROR";
         }
         int apiGatewayPort = Integer.parseInt(properties.getProperty("api.gateway.port"));
@@ -176,7 +176,7 @@ public class UserInterface {
                 String encodedFile = Base64.getEncoder().encodeToString(fileBytes);
                 request = requestPart[0] + ";" + requestPart[1] + ";" + destinationFileName + ";" + encodedFile;
             } catch (IOException e) {
-                System.err.println("File reading ERROR: " + e.getMessage());
+                System.err.println("File reading ERROR." + e.getMessage());
                 return "415;File ERROR";
             }
             try (Socket socket = new Socket(apiGatewayIP, apiGatewayPort);
@@ -185,7 +185,7 @@ public class UserInterface {
                 output.println(request);
                 return input.readLine();
             } catch (IOException e) {
-                System.err.println("APIGateway connection problem: " + e.getMessage());
+                System.err.println("APIGateway connection ERROR." + e.getMessage());
                 return "503;ApiGateway ERROR";
             }
         } else if (requestPart[0].equals("download_file")) {
@@ -206,14 +206,14 @@ public class UserInterface {
                         Files.write(Paths.get(destinationPath), fileBytes);
                         return "200;File downloaded successfully: " + destinationPath;
                     } catch (IOException e) {
-                        System.err.println("File writing ERROR: " + e.getMessage());
+                        System.err.println("File writing ERROR." + e.getMessage());
                         return "415;File ERROR";
                     }
                 } else {
                     return response;
                 }
             } catch (IOException e) {
-                System.err.println("APIGateway connection problem: " + e.getMessage());
+                System.err.println("APIGateway connection ERROR." + e.getMessage());
                 return "503;ApiGateway ERROR";
             }
         } else {
@@ -223,7 +223,7 @@ public class UserInterface {
                 output.println(request);
                 return input.readLine();
             } catch (IOException e) {
-                System.err.println("APIGateway connection problem: " + e.getMessage());
+                System.err.println("APIGateway connection ERROR." + e.getMessage());
                 return "503;ApiGateway ERROR";
             }
         }

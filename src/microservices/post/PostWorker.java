@@ -50,7 +50,7 @@ public class PostWorker implements Runnable {
                     output.println("200;Post successfully added.");
                     output.flush();
                 } catch (SQLException e) {
-                    System.err.println("503;Post Worker ERROR. " + e.getMessage());
+                    System.err.println("503;Post Worker ERROR." + e.getMessage());
                 }
             } else if (requestType.equals("get_posts")) {
                 try (Connection connection = DatabaseConnection.getConnection()) {
@@ -74,11 +74,11 @@ public class PostWorker implements Runnable {
                     }
                     output.print("299;" + posts);
                 } catch (SQLException e) {
-                    System.err.println("418;Post Worker ERROR. " + e.getMessage());
+                    System.err.println("418;Post Worker ERROR." + e.getMessage());
                 }
             }
         } catch (IOException e) {
-            System.err.println("503;Post Worker ERROR. " + e.getMessage());
+            System.err.println("503;Post Worker ERROR." + e.getMessage());
         } finally {
             try {
                 clientSocket.close();

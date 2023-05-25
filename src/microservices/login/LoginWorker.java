@@ -47,15 +47,15 @@ public class LoginWorker implements Runnable {
                     output.println("403;User doesn't exist in DB.");
                 }
             } catch (SQLException e) {
-                System.err.println("503;Login Worker ERROR. " + e.getMessage());
+                System.err.println("503;Login Worker ERROR." + e.getMessage());
             }
         } catch (IOException e) {
-            System.err.println("503;Login Worker ERROR. " + e.getMessage());
+            System.err.println("503;Login Worker ERROR." + e.getMessage());
         } finally {
             try {
                 clientSocket.close();
             } catch (IOException e) {
-                System.err.println("500;LoginWorker: Socket ERROR. " + e.getMessage());
+                System.err.println("500;LoginWorker: Socket ERROR." + e.getMessage());
             }
         }
     }
