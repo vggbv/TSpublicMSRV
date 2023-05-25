@@ -12,7 +12,7 @@ public class PostService {
         try {
             properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
-            System.err.println("Config File loading ERROR. " + e.getMessage());
+            System.err.println("404;Config File loading ERROR. " + e.getMessage());
             return;
         }
 
@@ -24,7 +24,7 @@ public class PostService {
                 new Thread(new PostWorker(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.println("Post Service ERROR. " + e.getMessage());
+            System.err.println("500;Post Service ERROR. " + e.getMessage());
         }
     }
 }

@@ -12,7 +12,7 @@ public class FileService {
         try {
             properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
-            System.err.println("Config File loading ERROR. " + e.getMessage());
+            System.err.println("404;Config File loading ERROR." + e.getMessage());
             return;
         }
 
@@ -24,7 +24,7 @@ public class FileService {
                 new Thread(new FileWorker(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.println("File Service ERROR: " + e.getMessage());
+            System.err.println("500;File Service ERROR." + e.getMessage());
         }
     }
 }

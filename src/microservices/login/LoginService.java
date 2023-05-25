@@ -12,7 +12,7 @@ public class LoginService {
         try {
             properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
-            System.err.println("Config File loading error" + e.getMessage());
+            System.err.println("404;Config File loading error" + e.getMessage());
             return;
         }
 
@@ -24,7 +24,7 @@ public class LoginService {
                 new Thread(new LoginWorker(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.println("Login Service ERROR. " + e.getMessage());
+            System.err.println("500;Login Service ERROR. " + e.getMessage());
         }
     }
 }

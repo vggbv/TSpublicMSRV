@@ -36,7 +36,7 @@ public class PostWorker implements Runnable {
                     ResultSet resultSet = getUserIdStatement.executeQuery();
 
                     if (!resultSet.next()) {
-                        output.println("error;User doesn't exist in DB.");
+                        output.println("404;User doesn't exist in DB.");
                         output.flush();
                         return;
                     }
