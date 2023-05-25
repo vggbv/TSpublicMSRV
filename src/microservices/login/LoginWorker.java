@@ -25,7 +25,7 @@ public class LoginWorker implements Runnable {
             String request = input.readLine();
             String[] userData = request.split(";");
             if (userData.length != 3) {
-                output.println("error;Wrong credentials.");
+                output.println("403;Wrong credentials.");
                 return;
             }
 
@@ -39,23 +39,23 @@ public class LoginWorker implements Runnable {
                 if (resultSet.next()) {
 
                     if (resultSet.getString("password").equals(password)) {
-                        output.println("success;Logged in.");
+                        output.println("200;Logged in.");
                     } else {
-                        output.println("error;Wrong password.");
+                        output.println("403;Wrong password.");
                     }
                 } else {
-                    output.println("error;User doesn't exist in DB.");
+                    output.println("403;User doesn't exist in DB.");
                 }
             } catch (SQLException e) {
-                System.err.println("Login Worker ERROR. " + e.getMessage());
+                System.err.println("503;Login Worker ERROR. " + e.getMessage());
             }
         } catch (IOException e) {
-            System.err.println("Login Worker ERROR. " + e.getMessage());
+            System.err.println("503;Login Worker ERROR. " + e.getMessage());
         } finally {
             try {
                 clientSocket.close();
             } catch (IOException e) {
-                System.err.println("LoginWorker: Socket ERROR. " + e.getMessage());
+                System.err.println("500;LoginWorker: Socket ERROR. " + e.getMessage());
             }
         }
     }

@@ -29,7 +29,7 @@ public class FileWorker implements Runnable {
 
                 String destinationPath = System.getProperty("user.home") + File.separator + destinationFileName;
                 Files.write(Paths.get(destinationPath), fileBytes);
-                output.println("success;File uploaded.");
+                output.println("200;File uploaded.");
             } else if (requestFile[0].equals("download_file")) {
                 String fileName = requestFile[2];
                 String filePath = System.getProperty("user.home") + File.separator + fileName;
@@ -38,19 +38,19 @@ public class FileWorker implements Runnable {
                 if (Files.exists(path)) {
                     byte[] fileBytes = Files.readAllBytes(path);
                     String encodedFile = Base64.getEncoder().encodeToString(fileBytes);
-                    output.println("success;" + encodedFile);
+                    output.println("200;" + encodedFile);
                 } else {
-                    output.println("error;File not found.");
+                    output.println("404;File not found.");
                 }
             }
         } catch (IOException e) {
-            System.err.println("Request processing ERROR: " + e.getMessage());
+            System.err.println("503;Request processing ERROR: " + e.getMessage());
         } finally {
             if (clientSocket != null) {
                 try {
                     clientSocket.close();
                 } catch (IOException e) {
-                    System.err.println("Closing socket ERROR: " + e.getMessage());
+                    System.err.println("500;Socket ERROR: " + e.getMessage());
                 }
             }
         }

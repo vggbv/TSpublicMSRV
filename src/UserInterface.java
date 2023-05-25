@@ -139,14 +139,14 @@ public class UserInterface {
             String responseType = responseParts[0];
             String responseData = responseParts.length > 1 ? responseParts[1] : "";
 
-            if (responseType.equals("success")) {
+            if (responseType.equals("200")) {
                 if (type.equals("login") || type.equals("register")) {
                     currentUser = username;
                 } else if (type.equals("upload_file") | type.equals("download_file")) {
                     System.out.println("File transfer successful.");
                 }
             }
-            if (responseType.equals("successPosts")) {
+            if (responseType.equals("299")) {
                 String[] posts = responseData.split("\t%\t");
                 for (String post : posts) {
                     System.out.println(post);
@@ -163,6 +163,7 @@ public class UserInterface {
             properties.load(new FileInputStream("config.properties"));
         } catch (IOException e) {
             System.err.println("Config File loading ERROR. " + e.getMessage());
+            return "404;Config File ERROR";
         }
         int apiGatewayPort = Integer.parseInt(properties.getProperty("api.gateway.port"));
         String apiGatewayIP = properties.getProperty("api.gateway.ip");
@@ -176,7 +177,7 @@ public class UserInterface {
                 request = requestPart[0] + ";" + requestPart[1] + ";" + destinationFileName + ";" + encodedFile;
             } catch (IOException e) {
                 System.err.println("File reading ERROR: " + e.getMessage());
-                return "File ERROR";
+                return "415;File ERROR";
             }
             try (Socket socket = new Socket(apiGatewayIP, apiGatewayPort);
                  PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
@@ -185,7 +186,7 @@ public class UserInterface {
                 return input.readLine();
             } catch (IOException e) {
                 System.err.println("APIGateway connection problem: " + e.getMessage());
-                return "ApiGateway ERROR";
+                return "503;ApiGateway ERROR";
             }
         } else if (requestPart[0].equals("download_file")) {
             try (Socket socket = new Socket(apiGatewayIP, apiGatewayPort);
@@ -196,24 +197,24 @@ public class UserInterface {
                 String response = input.readLine();
                 String[] responseParts = response.split(";", 2);
 
-                if ("success".equals(responseParts[0])) {
+                if ("200".equals(responseParts[0])) {
                     String encodedFile = responseParts[1];
                     byte[] fileBytes = Base64.getDecoder().decode(encodedFile);
                     String fileName = requestPart[2];
                     String destinationPath = System.getProperty("user.home") + File.separator + "DOWNLOADED_" + fileName;
                     try {
                         Files.write(Paths.get(destinationPath), fileBytes);
-                        return "success;File downloaded successfully: " + destinationPath;
+                        return "200;File downloaded successfully: " + destinationPath;
                     } catch (IOException e) {
                         System.err.println("File writing ERROR: " + e.getMessage());
-                        return "File ERROR";
+                        return "415;File ERROR";
                     }
                 } else {
                     return response;
                 }
             } catch (IOException e) {
                 System.err.println("APIGateway connection problem: " + e.getMessage());
-                return "ApiGateway ERROR";
+                return "503;ApiGateway ERROR";
             }
         } else {
             try (Socket socket = new Socket(apiGatewayIP, apiGatewayPort);
@@ -223,7 +224,7 @@ public class UserInterface {
                 return input.readLine();
             } catch (IOException e) {
                 System.err.println("APIGateway connection problem: " + e.getMessage());
-                return "ApiGateway ERROR";
+                return "503;ApiGateway ERROR";
             }
         }
     }

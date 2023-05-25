@@ -5,6 +5,7 @@
       <root url="jar://$PROJECT_DIR$/../commons-net-3.9.0/commons-net-3.9.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/../mysql-connector-j-8.0.31.jar!/" />
       <root url="jar://$USER_HOME$/Desktop/mysql-connector-j-8.0.31.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../mysql-connector-j-8.0.31.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

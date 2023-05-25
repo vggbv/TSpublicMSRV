@@ -47,10 +47,10 @@ public class PostWorker implements Runnable {
                     insertPostStatement.setString(2, postData);
                     insertPostStatement.executeUpdate(); //jest 3:54 w nocy i przeraża mnie słowo execute tutaj
 
-                    output.println("success;Post successfully added.");
+                    output.println("200;Post successfully added.");
                     output.flush();
                 } catch (SQLException e) {
-                    System.err.println("Post Worker ERROR. " + e.getMessage());
+                    System.err.println("503;Post Worker ERROR. " + e.getMessage());
                 }
             } else if (requestType.equals("get_posts")) {
                 try (Connection connection = DatabaseConnection.getConnection()) {
@@ -72,18 +72,18 @@ public class PostWorker implements Runnable {
                             posts.append("User ").append(uname).append("\s\sWrote:\t").append(content).append("\t%\tAdded: ").append(tstamp).append("\t%\t\t%\t");
                         }
                     }
-                    output.print("successPosts;" + posts);
+                    output.print("299;" + posts);
                 } catch (SQLException e) {
-                    System.err.println("Post Worker ERROR. " + e.getMessage());
+                    System.err.println("418;Post Worker ERROR. " + e.getMessage());
                 }
             }
         } catch (IOException e) {
-            System.err.println("Post Worker ERROR. " + e.getMessage());
+            System.err.println("503;Post Worker ERROR. " + e.getMessage());
         } finally {
             try {
                 clientSocket.close();
             } catch (IOException e) {
-                System.err.println("PostWorker: Socket ERROR." + e.getMessage());
+                System.err.println("500;PostWorker: Socket ERROR." + e.getMessage());
             }
         }
     }

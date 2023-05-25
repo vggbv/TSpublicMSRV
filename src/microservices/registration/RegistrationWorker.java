@@ -26,7 +26,7 @@ public class RegistrationWorker implements Runnable {
             String[] userData = request.split(";");
 
             if (userData.length != 3) {
-                output.println("error;Wrong registration data.");
+                output.println("406;Wrong registration data.");
                 return;
             }
 
@@ -39,7 +39,7 @@ public class RegistrationWorker implements Runnable {
                 ResultSet resultSet = checkUserStatement.executeQuery();
 
                 if (resultSet.next()) {
-                    output.println("error;User already existing in DB.");
+                    output.println("409;User already existing in DB.");
                     output.flush();
                     return;
                 }
@@ -49,18 +49,18 @@ public class RegistrationWorker implements Runnable {
                 insertUserStatement.setString(2, password);
                 insertUserStatement.executeUpdate();
 
-                output.println("success;Successfully registered. Congratulations. ");
+                output.println("200;Successfully registered. Congratulations. ");
                 output.flush();
             } catch (SQLException e) {
-                System.err.println("Registration Worker ERROR. " + e.getMessage());
+                System.err.println("503;Registration Worker ERROR. " + e.getMessage());
             }
         } catch (IOException e) {
-            System.err.println("Registration Worker ERROR. " + e.getMessage());
+            System.err.println("503;Registration Worker ERROR. " + e.getMessage());
         } finally {
             try {
                 clientSocket.close();
             } catch (IOException e) {
-                System.err.println("Registration Worker: Socket ERROR. " + e.getMessage());
+                System.err.println("500;Registration Worker: Socket ERROR. " + e.getMessage());
             }
         }
     }
